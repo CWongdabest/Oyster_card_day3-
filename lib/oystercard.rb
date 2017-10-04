@@ -3,6 +3,7 @@ class Oystercard
 
   DEFAULT_BALANCE = 0
   MAXIMUM_BALANCE = 90
+  MINIMUM_BALANCE = 1
 
 
   def initialize(balance = DEFAULT_BALANCE)
@@ -19,6 +20,7 @@ class Oystercard
   end
 
   def touch_in
+    fail 'insufficient fund' if fund_sufficient?
     @usage = true
   end
 
@@ -39,6 +41,10 @@ class Oystercard
 
   def exceed_maximum?(money)
     @balance + money > MAXIMUM_BALANCE
+  end
+
+  def fund_sufficient?
+    @balance < MINIMUM_BALANCE
   end
 
 end
